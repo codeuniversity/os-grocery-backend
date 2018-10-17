@@ -1,0 +1,12 @@
+type ListItem {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    allListItems: [ListItem]
+}
+
+schema {
+    query: Query
+}
