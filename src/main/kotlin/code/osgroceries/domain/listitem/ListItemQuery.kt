@@ -7,5 +7,7 @@ import org.springframework.stereotype.Service
 @Service
 class ListItemQuery @Autowired constructor(val listItemRepository: ListItemRepository) : GraphQLQueryResolver {
 
-    fun allListItems() = listItemRepository.findAll()
+    fun getAllListItems() = listItemRepository.findAll()
+
+    fun getOneListItem(id: String) = listItemRepository.findById(id)
 }

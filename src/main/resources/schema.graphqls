@@ -4,9 +4,17 @@ type ListItem {
 }
 
 type Query {
-    allListItems: [ListItem]
+    getAllListItems: [ListItem]
+    getOneListItem(id: ID!): ListItem
+}
+
+type Mutation {
+    createListItem(name: String!): ListItem
+    updateListItem(id: ID!, name: String!): ListItem
+    deleteListItem(id: ID!): String
 }
 
 schema {
     query: Query
+    mutation: Mutation
 }
