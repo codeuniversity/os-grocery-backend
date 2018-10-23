@@ -11,6 +11,8 @@ type Supermarket {
 type Query {
     getAllListItems: [ListItem]
     getOneListItem(id: ID!): ListItem
+
+    getAllSupermarkets: [Supermarket]
 }
 
 type Mutation {
