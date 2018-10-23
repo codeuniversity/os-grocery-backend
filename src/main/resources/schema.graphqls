@@ -3,6 +3,11 @@ type ListItem {
     name: String!
 }
 
+type Supermarket {
+    id: ID!
+    name: String!
+}
+
 type Query {
     getAllListItems: [ListItem]
     getOneListItem(id: ID!): ListItem
@@ -12,6 +17,8 @@ type Mutation {
     createListItem(name: String!): ListItem
     updateListItem(id: ID!, name: String!): ListItem
     deleteListItem(id: ID!): String
+
+    createSupermarket(name: String!): Supermarket
 }
 
 schema {
