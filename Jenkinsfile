@@ -13,6 +13,14 @@ pipeline {
       }
     }
 
+    stage ('Test') {
+      steps {
+        sh """
+          docker build --target unit-tester .
+        """
+      }
+    }
+
     stage ('Runner Build') {
       steps {
         sh """

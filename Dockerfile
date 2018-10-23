@@ -7,5 +7,8 @@ COPY . .
 FROM resolver AS builder
 RUN mvn compile
 
+FROM builder AS unit-tester
+RUN mvn test
+
 FROM builder AS runner
 CMD ["mvn", "spring-boot:run"]
