@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class SupermarketMutation @Autowired constructor(val supermarketRepository: SupermarketRepository) : GraphQLMutationResolver {
+class SupermarketMutation @Autowired constructor(
+        val supermarketRepository: SupermarketRepository
+) : GraphQLMutationResolver {
 
     fun createSupermarket(name: String) =
             supermarketRepository.insert(Supermarket(generateId(), name))

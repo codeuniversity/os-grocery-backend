@@ -1,31 +1,25 @@
 package code.osgroceries.domain.listitem
 
-import code.osgroceries.util.generateId
+import code.osgroceries.domain.listitem.services.ListItemCreateService
+import code.osgroceries.domain.listitem.services.ListItemDeleteService
+import code.osgroceries.domain.listitem.services.ListItemRenameService
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.io.IOException
 
 @Service
-class ListItemMutation @Autowired constructor(val listItemRepository: ListItemRepository) : GraphQLMutationResolver {
+class ListItemMutation @Autowired constructor(
+        val listItemCreateService: ListItemCreateService,
+        val listItemRenameService: ListItemRenameService,
+        val listItemDeleteService: ListItemDeleteService
+) : GraphQLMutationResolver {
 
-    fun createListItem(name: String) = listItemRepository.insert(ListItem(generateId(), name))
+    fun createListItem(name: String, shoppingListId: String) =
+            listItemCreateService.createListItem(name, shoppingListId)
 
-    fun updateListItem(id: String, name: String): ListItem {
-        val optionalListItem = listItemRepository.findById(id)
+    fun updateListItem(id: String, name: String) =
+            listItemRenameService.renameListItem(id, name)
 
-        if (!optionalListItem.isPresent)
-            throw IOException()
-
-        val listItem = optionalListItem.get()
-        val updatedListItem = ListItem(listItem.id, name)
-        listItemRepository.save(updatedListItem)
-
-        return updatedListItem
-    }
-
-    fun deleteListItem(id: String): String {
-        listItemRepository.deleteById(id)
-        return id
-    }
+    fun deleteListItem(id: String) =
+            listItemDeleteService.deleteListItem(id)
 }

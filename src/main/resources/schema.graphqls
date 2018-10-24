@@ -1,6 +1,12 @@
 type ListItem {
     id: ID!
     name: String!
+    shoppingList: ShoppingList
+}
+
+type ShoppingList {
+    id: ID!
+    listItems: [ListItem]
 }
 
 type Supermarket {
@@ -16,9 +22,11 @@ type Query {
 }
 
 type Mutation {
-    createListItem(name: String!): ListItem
+    createListItem(name: String!, shoppingListId: ID!): ListItem
     updateListItem(id: ID!, name: String!): ListItem
     deleteListItem(id: ID!): String
+
+    createShoppingList: ShoppingList
 
     createSupermarket(name: String!): Supermarket
 }
