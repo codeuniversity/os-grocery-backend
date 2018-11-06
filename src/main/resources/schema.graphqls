@@ -1,37 +1,62 @@
-type ListItem {
-    id: ID!
-    name: String!
-    shoppingList: ShoppingList
+enum Unit {
+  PACKETS, ML, LTR, KG
 }
 
-type ShoppingList {
-    id: ID!
-    listItems: [ListItem]
+type Item {
+  id: ID
+  name: String
+}
+
+type ListItem {
+  id: ID
+  item: Item
+  unit: Unit
+  amount: Float
+  fetched: Boolean
+}
+
+type SortedListItem {
+  listItem: ListItem
+  row: Row
+}
+
+type Row {
+  id: ID
+  name: String
+  supermarket: Supermarket
 }
 
 type Supermarket {
-    id: ID!
-    name: String!
+  id: ID
+  name: String
+  rows: [Row]
+}
+
+type ShoppingList {
+  listItems: [ListItem]
+}
+
+type SortedShoppingList {
+  unfetchedItems: [SortedListItem]
+  fetchedItems: [SortedListItem]
 }
 
 type Query {
-    getAllListItems: [ListItem]
-    getOneListItem(id: ID!): ListItem
+  getItems: [Item]
+  getShoppingList: ShoppingList
+  getSortedShoppingList: SortedShoppingList
 
-    getAllSupermarkets: [Supermarket]
+  getAllSupermarkets: [Supermarket]
 }
 
 type Mutation {
-    createListItem(name: String!, shoppingListId: ID!): ListItem
-    updateListItem(id: ID!, name: String!): ListItem
-    deleteListItem(id: ID!): String
-
-    createShoppingList: ShoppingList
-
-    createSupermarket(name: String!): Supermarket
+  addListItemToList(itemId: ID!, amount: Float!, unit: Unit!): ListItem
+  removeListItemFromList(listItemId: ID!): ListItem
+  completeListItem(listItemId: ID!): ListItem
+  uncompleteListItem(listItemId: ID!): ListItem
 }
 
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
 }

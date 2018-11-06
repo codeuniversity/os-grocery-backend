@@ -1,3 +1,7 @@
 package code.osgroceries.domain.shoppinglist
 
-data class ShoppingList(val id: String, val listItemIds: List<String>)
+import code.osgroceries.domain.listitem.ListItem
+
+data class ShoppingList(
+        val listItems: List<ListItem>
+)
