@@ -26,6 +26,14 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.natpryce</groupId>
+			<artifactId>hamkrest</artifactId>
+			<version>1.6.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>test</scope>

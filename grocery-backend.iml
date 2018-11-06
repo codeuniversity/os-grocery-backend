@@ -53,6 +53,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.natpryce:hamkrest:1.6.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: de.flapdoodle.embed:de.flapdoodle.embed.process:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
