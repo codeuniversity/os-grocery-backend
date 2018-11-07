@@ -103,7 +103,7 @@ class GetRowServiceTest {
         given(supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId))
                 .willReturn(supermarketItem)
 
-        val expectedRow = Row(rowId, "rowName")
+        val expectedRow = Row(rowId, "rowName", "supermarketId")
         given(rowRepository.findById(rowId)).willReturn(Optional.of(expectedRow))
 
         // when
@@ -128,7 +128,7 @@ class GetRowServiceTest {
     @Test
     fun `getRowById should get the row by its id`() {
         // given
-        val expectedRow = Row(rowId, "rowName")
+        val expectedRow = Row(rowId, "rowName", "supermarketId")
         given(rowRepository.findById(rowId)).willReturn(Optional.of(expectedRow))
 
         // when
