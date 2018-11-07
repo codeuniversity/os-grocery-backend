@@ -14,6 +14,8 @@ import org.mockito.Mock
 @RunWith(MockitoJUnitRunner::class)
 class SortedShoppingListQueryTest {
 
+    private val supermarketId: String = "supermarketId"
+
     @InjectMocks
     lateinit var sortedShoppingListQuery: SortedShoppingListQuery
 
@@ -27,10 +29,10 @@ class SortedShoppingListQueryTest {
         val fetchedItems = listOf<SortedListItem>()
         val expectedSortedShoppingList = SortedShoppingList(unfetchedItems, fetchedItems)
 
-        given(getSortedShoppingListService.getSortedShoppingList()).willReturn(expectedSortedShoppingList)
+        given(getSortedShoppingListService.getSortedShoppingList(supermarketId)).willReturn(expectedSortedShoppingList)
 
         // when
-        val sortedShoppingList = sortedShoppingListQuery.getSortedShoppingList()
+        val sortedShoppingList = sortedShoppingListQuery.getSortedShoppingList(supermarketId)
 
         // then
         assert.that(sortedShoppingList, equalTo(expectedSortedShoppingList))

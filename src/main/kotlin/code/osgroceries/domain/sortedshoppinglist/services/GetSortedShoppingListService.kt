@@ -10,8 +10,8 @@ class GetSortedShoppingListService @Autowired constructor(
         private val getUnfetchedAndFetchedSortedListItemsService: GetUnfetchedAndFetchedSortedListItemsService
 ){
 
-    fun getSortedShoppingList(): SortedShoppingList {
-        val (unfetchedItems, fetchedItems) = getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems()
+    fun getSortedShoppingList(supermarketId: String): SortedShoppingList {
+        val (unfetchedItems, fetchedItems) = getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems(supermarketId)
         return SortedShoppingList(unfetchedItems, fetchedItems)
     }
 }

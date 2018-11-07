@@ -44,7 +44,7 @@ type SortedShoppingList {
 type Query {
   getItems: [Item]
   getShoppingList: ShoppingList
-  getSortedShoppingList: SortedShoppingList
+  getSortedShoppingList(supermarketId: ID!): SortedShoppingList
 
   getAllSupermarkets: [Supermarket]
 }

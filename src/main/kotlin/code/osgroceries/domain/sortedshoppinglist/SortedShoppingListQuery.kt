@@ -10,5 +10,6 @@ class SortedShoppingListQuery @Autowired constructor(
         private val getSortedShoppingListService: GetSortedShoppingListService
 ) : GraphQLQueryResolver {
 
-    fun getSortedShoppingList(): SortedShoppingList = getSortedShoppingListService.getSortedShoppingList()
+    fun getSortedShoppingList(supermarketId: String): SortedShoppingList =
+            getSortedShoppingListService.getSortedShoppingList(supermarketId)
 }

@@ -5,18 +5,20 @@ import code.osgroceries.domain.listitem.createMockListItem
 import code.osgroceries.domain.listitem.services.GetUnfetchedAndFetchedListItemsService
 import code.osgroceries.domain.row.createMockRow
 import code.osgroceries.domain.sortedlistitem.SortedListItem
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.junit.MockitoJUnitRunner
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.hasSize
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
+import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class GetUnfetchedAndFetchedSortedListItemsServiceTest {
+
+    private val supermarketId: String = "supermarketId"
 
     @InjectMocks
     lateinit var getUnfetchedAndFetchedSortedListItemsService: GetUnfetchedAndFetchedSortedListItemsService
@@ -33,7 +35,7 @@ class GetUnfetchedAndFetchedSortedListItemsServiceTest {
         given(getUnfetchedAndFetchedListItemsService.getUnfetchedAndFetchedListItems()).willReturn(givenUnfetchedAndFetchedListItems())
 
         // when
-        val unfetchedAndFetchedSortedListItems = getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems()
+        val unfetchedAndFetchedSortedListItems = getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems(supermarketId)
 
         // then
         assert.that(unfetchedAndFetchedSortedListItems, hasSize(equalTo(2)))
@@ -47,21 +49,21 @@ class GetUnfetchedAndFetchedSortedListItemsServiceTest {
 
         val (unfetchedListItems, fetchedListItems) = givenUnfetchedAndFetchedListItems
 
-        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(unfetchedListItems[0])).willReturn(
+        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(unfetchedListItems[0], supermarketId)).willReturn(
                 SortedListItem(unfetchedListItems[0], createMockRow())
         )
-        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(unfetchedListItems[1])).willReturn(
+        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(unfetchedListItems[1], supermarketId)).willReturn(
                 SortedListItem(unfetchedListItems[1], createMockRow())
         )
-        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(fetchedListItems[0])).willReturn(
+        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(fetchedListItems[0], supermarketId)).willReturn(
                 SortedListItem(fetchedListItems[0], createMockRow())
         )
-        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(fetchedListItems[1])).willReturn(
+        given(listItemToSortedListItemConverterService.convertListItemToSortedListItem(fetchedListItems[1], supermarketId)).willReturn(
                 SortedListItem(fetchedListItems[1], createMockRow())
         )
 
         // when
-        val unfetchedAndFetchedSortedListItems = getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems()
+        val unfetchedAndFetchedSortedListItems = getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems(supermarketId)
 
         // then
         assert.that(unfetchedAndFetchedSortedListItems, hasSize(equalTo(2)))

@@ -15,6 +15,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class GetSortedShoppingListServiceTest {
 
+    private val supermarketId: String = "supermarketId"
+
     @InjectMocks
     lateinit var getSortedShoppingListService: GetSortedShoppingListService
 
@@ -24,7 +26,7 @@ class GetSortedShoppingListServiceTest {
     @Test
     fun `getSortedShoppingList should get the ShoppingList as SortedShoppingList`() {
         // given
-        given(getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems()).willReturn(
+        given(getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems(supermarketId)).willReturn(
                 listOf(
                         listOf(createMockSortedListItem(), createMockSortedListItem()),
                         listOf(createMockSortedListItem(), createMockSortedListItem())
@@ -32,7 +34,7 @@ class GetSortedShoppingListServiceTest {
         )
 
         // when
-        val sortedShoppingList = getSortedShoppingListService.getSortedShoppingList()
+        val sortedShoppingList = getSortedShoppingListService.getSortedShoppingList(supermarketId)
 
         // then
         assert.that(sortedShoppingList.unfetchedItems, hasSize(equalTo(2)))

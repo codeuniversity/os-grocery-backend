@@ -11,16 +11,16 @@ class GetUnfetchedAndFetchedSortedListItemsService @Autowired constructor(
         private val listItemToSortedListItemConverterService: ListItemToSortedListItemConverterService
 ) {
 
-    fun getUnfetchedAndFetchedSortedListItems(): List<List<SortedListItem>> {
+    fun getUnfetchedAndFetchedSortedListItems(supermarketId: String): List<List<SortedListItem>> {
         val (unfetchedListItems, fetchedListItems) = getUnfetchedAndFetchedListItemsService.getUnfetchedAndFetchedListItems()
 
-        val unfetchedSortedListItems = unfetchedListItems.map(
-                listItemToSortedListItemConverterService::convertListItemToSortedListItem
-        )
+        val unfetchedSortedListItems = unfetchedListItems.map {
+                listItemToSortedListItemConverterService.convertListItemToSortedListItem(it, supermarketId)
+        }
 
-        val fetchedSortedListItems = fetchedListItems.map(
-                listItemToSortedListItemConverterService::convertListItemToSortedListItem
-        )
+        val fetchedSortedListItems = fetchedListItems.map {
+                listItemToSortedListItemConverterService.convertListItemToSortedListItem(it, supermarketId)
+        }
 
         return listOf(unfetchedSortedListItems, fetchedSortedListItems)
     }
