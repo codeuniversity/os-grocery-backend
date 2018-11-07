@@ -1,7 +1,7 @@
 package code.osgroceries.domain.sortedshoppinglist.services
 
 import code.osgroceries.domain.sortedlistitem.createMockSortedListItem
-import code.osgroceries.domain.sortedlistitem.services.GetUnfetchedAndFetchedItemsService
+import code.osgroceries.domain.sortedlistitem.services.GetUnfetchedAndFetchedSortedListItemsService
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.hasSize
@@ -19,12 +19,12 @@ class GetSortedShoppingListServiceTest {
     lateinit var getSortedShoppingListService: GetSortedShoppingListService
 
     @Mock
-    lateinit var getUnfetchedAndFetchedItemsService: GetUnfetchedAndFetchedItemsService
+    lateinit var getUnfetchedAndFetchedSortedListItemsService: GetUnfetchedAndFetchedSortedListItemsService
 
     @Test
     fun `getSortedShoppingList should get the ShoppingList as SortedShoppingList`() {
         // given
-        given(getUnfetchedAndFetchedItemsService.getUnfetchedAndFetchedItems()).willReturn(
+        given(getUnfetchedAndFetchedSortedListItemsService.getUnfetchedAndFetchedSortedListItems()).willReturn(
                 listOf(
                         listOf(createMockSortedListItem(), createMockSortedListItem()),
                         listOf(createMockSortedListItem(), createMockSortedListItem())
