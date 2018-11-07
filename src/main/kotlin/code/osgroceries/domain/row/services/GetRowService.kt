@@ -21,9 +21,12 @@ class GetRowService @Autowired constructor(
     fun getRowByItemIdAndSupermarketId(itemId: String, supermarketId: String): Row {
         getItemService.getItemById(itemId)
         getSupermarketService.getSupermarketById(supermarketId)
-        val supermarketItem = supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId)
-                ?: throw ItemNotInSupermarketException("Item with id $itemId cannot be found in supermarket with id $supermarketId.")
-        return getRowById(supermarketItem.rowId)
+        val optionalSupermarketItem = supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId)
+
+        if (!optionalSupermarketItem.isPresent)
+            throw ItemNotInSupermarketException("Item with id $itemId cannot be found in supermarket with id $supermarketId.")
+
+        return getRowById(optionalSupermarketItem.get().rowId)
     }
 
     fun getRowById(rowId: String): Row {

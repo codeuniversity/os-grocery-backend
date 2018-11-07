@@ -7,6 +7,5 @@ import java.util.*
 @Repository
 interface SupermarketToItemRepository : MongoRepository<SupermarketItem, String> {
 
-    fun findBySupermarketIdAndItemId(supermarketId: String, itemId: String): SupermarketItem?
-    fun findByRowId(rowId: String): Optional<SupermarketItem>
+    fun findBySupermarketIdAndItemId(supermarketId: String, itemId: String): Optional<SupermarketItem>
 }

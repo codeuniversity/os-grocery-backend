@@ -84,7 +84,7 @@ class GetRowServiceTest {
         // given
         given(getItemService.getItemById(itemId)).willReturn(createMockItem())
         given(getSupermarketService.getSupermarketById(supermarketId)).willReturn(createMockSupermarket())
-        given(supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId)).willReturn(null)
+        given(supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId)).willReturn(Optional.empty())
 
         // expect
         expectedException.expect(ItemNotInSupermarketException::class.java)
@@ -101,7 +101,7 @@ class GetRowServiceTest {
 
         val supermarketItem = SupermarketItem(generateId(), supermarketId, itemId, rowId)
         given(supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId))
-                .willReturn(supermarketItem)
+                .willReturn(Optional.of(supermarketItem))
 
         val expectedRow = Row(rowId, "rowName", "supermarketId")
         given(rowRepository.findById(rowId)).willReturn(Optional.of(expectedRow))
