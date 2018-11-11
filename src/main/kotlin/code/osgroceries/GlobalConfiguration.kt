@@ -9,5 +9,6 @@ import org.springframework.stereotype.Component
 @PropertySource("classpath:global.properties")
 data class GlobalConfiguration @Autowired constructor(
         @Value("\${defaults.supermarketId}") val defaultSupermarketId: String,
-        @Value("\${defaults.supermarketName}") val defaultSupermarketName: String
+        @Value("\${defaults.supermarketName}") val defaultSupermarketName: String,
+        @Value("\${defaults.data}") val defaultDataAsString: String
 )
