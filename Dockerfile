@@ -11,4 +11,4 @@ FROM builder AS unit-tester
 RUN mvn test
 
 FROM builder AS runner
-CMD ["mvn", "spring-boot:run", "-Dspring.config.location=docker.properties"]
+CMD ["mvn", "spring-boot:run"]
