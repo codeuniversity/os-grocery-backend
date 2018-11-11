@@ -6,9 +6,10 @@ import code.osgroceries.domain.item.exceptions.ItemNotFoundException
 import code.osgroceries.domain.item.services.GetItemService
 import code.osgroceries.domain.row.Row
 import code.osgroceries.domain.row.RowRepository
+import code.osgroceries.domain.row.createMockRow
 import code.osgroceries.domain.row.exceptions.RowNotFoundException
-import code.osgroceries.domain.row.supermarketitem.SupermarketItem
-import code.osgroceries.domain.row.supermarketitem.SupermarketToItemRepository
+import code.osgroceries.domain.row.rowitem.RowItem
+import code.osgroceries.domain.row.rowitem.RowToItemRepository
 import code.osgroceries.domain.supermarket.Supermarket
 import code.osgroceries.domain.supermarket.createMockSupermarket
 import code.osgroceries.domain.supermarket.exceptions.ItemNotInSupermarketException
@@ -21,6 +22,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
+import org.mockito.BDDMockito.anyList
 import org.mockito.BDDMockito.given
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -48,7 +51,7 @@ class GetRowServiceTest {
     lateinit var getSupermarketService: GetSupermarketService
 
     @Mock
-    lateinit var supermarketToItemRepository: SupermarketToItemRepository
+    lateinit var rowToItemRepository: RowToItemRepository
 
     @Mock
     lateinit var rowRepository: RowRepository
@@ -84,7 +87,12 @@ class GetRowServiceTest {
         // given
         given(getItemService.getItemById(itemId)).willReturn(createMockItem())
         given(getSupermarketService.getSupermarketById(supermarketId)).willReturn(createMockSupermarket())
-        given(supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId)).willReturn(Optional.empty())
+
+        val rows = listOf(createMockRow(), createMockRow())
+        given(rowRepository.findBySupermarketId(supermarketId)).willReturn(rows)
+
+        val rowIds = rows.map { it.id }
+        given(rowToItemRepository.findByRowIdsAndItemId(rowIds, itemId)).willReturn(Optional.empty())
 
         // expect
         expectedException.expect(ItemNotInSupermarketException::class.java)
@@ -99,8 +107,12 @@ class GetRowServiceTest {
         given(getItemService.getItemById(itemId)).willReturn(Item(itemId, "itemName"))
         given(getSupermarketService.getSupermarketById(supermarketId)).willReturn(Supermarket(supermarketId, "supermarketName"))
 
-        val supermarketItem = SupermarketItem(generateId(), supermarketId, itemId, rowId)
-        given(supermarketToItemRepository.findBySupermarketIdAndItemId(supermarketId, itemId))
+        val rows = listOf(createMockRow(), createMockRow())
+        given(rowRepository.findBySupermarketId(supermarketId)).willReturn(rows)
+
+        val rowIds = rows.map { it.id }
+        val supermarketItem = RowItem(generateId(), itemId, rowId)
+        given(rowToItemRepository.findByRowIdsAndItemId(rowIds, itemId))
                 .willReturn(Optional.of(supermarketItem))
 
         val expectedRow = Row(rowId, "rowName", "supermarketId")
