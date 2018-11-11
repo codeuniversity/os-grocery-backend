@@ -5,6 +5,7 @@ import code.osgroceries.domain.row.Row
 import code.osgroceries.domain.row.RowRepository
 import code.osgroceries.domain.row.exceptions.RowNotFoundException
 import code.osgroceries.domain.row.rowitem.RowToItemRepository
+import code.osgroceries.domain.row.rowitem.services.FindRowItemService
 import code.osgroceries.domain.supermarket.exceptions.ItemNotInSupermarketException
 import code.osgroceries.domain.supermarket.services.GetSupermarketService
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service
 class GetRowService @Autowired constructor(
         private val getItemService: GetItemService,
         private val getSupermarketService: GetSupermarketService,
-        private val rowToItemRepository: RowToItemRepository,
+        private val findRowItemService: FindRowItemService,
         private val rowRepository: RowRepository
 ) {
 
@@ -23,7 +24,7 @@ class GetRowService @Autowired constructor(
         getSupermarketService.getSupermarketById(supermarketId)
 
         val rowIds = rowRepository.findBySupermarketId(supermarketId).map { it.id }
-        val optionalRowItem = rowToItemRepository.findByRowIdsAndItemId(rowIds, itemId)
+        val optionalRowItem = findRowItemService.findByRowIdsAndItemId(rowIds, itemId)
 
         if (!optionalRowItem.isPresent)
             throw ItemNotInSupermarketException("Item with id $itemId cannot be found in supermarket with id $supermarketId.")
