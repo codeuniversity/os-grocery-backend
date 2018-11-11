@@ -8,4 +8,4 @@ Notes:
 
 Command to run mongo container:
 
-`$ docker run -d -p 27017:27017 --name=mongo mongo`
+`$ docker run -d -p 27017:27017 -v ~/data:/data/db --name mongo mongo`
