@@ -52,8 +52,8 @@ type Query {
 type Mutation {
   addListItemToList(itemId: ID!, amount: Float!, unit: Unit!): ListItem
   removeListItemFromList(listItemId: ID!): ListItem
-  completeListItem(listItemId: ID!): ListItem
-  uncompleteListItem(listItemId: ID!): ListItem
+  completeListItem(listItemId: ID!): SortedListItem
+  uncompleteListItem(listItemId: ID!): SortedListItem
 }
 
 schema {
